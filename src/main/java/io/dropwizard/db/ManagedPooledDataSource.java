@@ -23,7 +23,6 @@ public class ManagedPooledDataSource extends HikariDataSource implements Managed
     }
 
     // JDK6 has JDBC 4.0 which doesn't have this -- don't add @Override
-    @Override
     @SuppressWarnings("override")
     public Logger getParentLogger() throws SQLFeatureNotSupportedException {
         throw new SQLFeatureNotSupportedException("Doesn't use java.util.logging");

@@ -4,7 +4,17 @@
 [![Download](https://maven-badges.herokuapp.com/maven-central/com.github.mtakaki/dropwizard-hikaricp/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.mtakaki/dropwizard-hikaricp)
 
 # dropwizard-hikaricp
-This library provides a HikariCP integration for dropwizard, instead of using tomcat connection pool.
+This library provides a [HikariCP](https://github.com/brettwooldridge/HikariCP) integration for dropwizard, instead of using tomcat connection pool. It replaces the `dropwizard-hibernate` package, by overriding the classes `DataSourceFactory` and `ManagedPooledDataSource`.
+
+`DataSourceFactory` overrides the original class by building a `HikariConfig` object, which is passed to the `ManagedPooledDataSource`. `ManagedPooledDataSource` extends `HikariDataSource`, instead of Tomcat's `DataSourceProxy`. It should work with existing `dropwizard-hibernate` settings, except for transaction isolation.
+
+These are the available transaction isolation values. If not sure, leave it unset so it uses the default one.
+
+- TRANSACTION\_NONE
+- TRANSACTION\_READ\_UNCOMMITTED
+- TRANSACTION\_READ\_COMMITTED
+- TRANSACTION\_REPEATABLE\_READ
+- TRANSACTION\_SERIALIZABLE
 
 ## Maven
 

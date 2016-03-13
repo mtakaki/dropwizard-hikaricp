@@ -1,5 +1,24 @@
+# Status
+![Build Status](https://codeship.com/projects/37601470-cb27-0133-b906-266ee181f653/status?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/mtakaki/dropwizard-hikaricp/badge.svg?branch=master)](https://coveralls.io/github/mtakaki/dropwizard-hikaricp?branch=master)
+[![Download](https://maven-badges.herokuapp.com/maven-central/com.github.mtakaki/dropwizard-hikaricp/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.mtakaki/dropwizard-hikaricp)
+
 # dropwizard-hikaricp
 This library provides a HikariCP integration for dropwizard, instead of using tomcat connection pool.
+
+## Maven
+
+The library is available at the maven central, so just add dependency to `pom.xml`:
+
+```xml
+<dependencies>
+  <dependency>
+    <groupId>com.github.mtakaki</groupId>
+    <artifactId>dropwizard-hikaricp</artifactId>
+    <version>0.0.1</version>
+  </dependency>
+</dependencies>
+```
 
 ## Benchmark
 

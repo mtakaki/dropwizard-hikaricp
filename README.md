@@ -2,9 +2,10 @@
 ![Build Status](https://codeship.com/projects/37601470-cb27-0133-b906-266ee181f653/status?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/mtakaki/dropwizard-hikaricp/badge.svg?branch=master)](https://coveralls.io/github/mtakaki/dropwizard-hikaricp?branch=master)
 [![Download](https://maven-badges.herokuapp.com/maven-central/com.github.mtakaki/dropwizard-hikaricp/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.mtakaki/dropwizard-hikaricp)
+[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/com.github.mtakaki/dropwizard-hikaricp/badge.svg)](http://www.javadoc.io/doc/com.github.mtakaki/dropwizard-hikaricp)
 
 # dropwizard-hikaricp
-This library provides a [HikariCP](https://github.com/brettwooldridge/HikariCP) integration for dropwizard, instead of using tomcat connection pool. It replaces the `dropwizard-hibernate` package, by overriding the classes `DataSourceFactory` and `ManagedPooledDataSource`.
+This library provides a [HikariCP](https://github.com/brettwooldridge/HikariCP) integration for dropwizard, instead of using tomcat connection pool. It replaces the `dropwizard-hibernate` and `dropwizard-db` package, by overriding the classes `DataSourceFactory` and `ManagedPooledDataSource`.
 
 `DataSourceFactory` overrides the original class by building a `HikariConfig` object, which is passed to the `ManagedPooledDataSource`. `ManagedPooledDataSource` extends `HikariDataSource`, instead of Tomcat's `DataSourceProxy`. It should work with existing `dropwizard-hibernate` settings, except for transaction isolation.
 

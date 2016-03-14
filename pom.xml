@@ -71,7 +71,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.6</version>
+            <version>1.16.8</version>
             <scope>provided</scope>
         </dependency>
 
@@ -87,7 +87,7 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.2.0</version>
+            <version>3.3.0</version>
             <scope>test</scope>
         </dependency>
         <!-- In memory database -->

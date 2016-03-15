@@ -31,6 +31,15 @@ The library is available at the maven central, so just add dependency to `pom.xm
 </dependencies>
 ```
 
+If the bundle is actually using HikariCP, you should be able to see this right in the beginning of the logs:
+
+```
+INFO  [2016-03-14 06:32:06,681] org.eclipse.jetty.util.log: Logging initialized @1894ms
+INFO  [2016-03-14 06:32:08,675] com.zaxxer.hikari.HikariDataSource: hibernate - Started.
+```
+
+If you **don't** see it, it means it's not using HikariCP.
+
 ## Benchmark
 
 Before looking into the benchmark numbers, I recommend reading [HikariCP wiki](https://github.com/brettwooldridge/HikariCP/wiki/%22My-benchmark-doesn't-show-a-difference.%22) explaining the differences between Hikari and Tomcat.

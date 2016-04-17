@@ -18,8 +18,12 @@ public class ManagedPooledDataSource extends HikariDataSource implements Managed
      *            metrics.
      */
     public ManagedPooledDataSource(final HikariConfig config, final MetricRegistry metricRegistry) {
-        super(config);
+        this(config);
         this.setMetricRegistry(metricRegistry);
+    }
+
+    public ManagedPooledDataSource(final HikariConfig config) {
+        super(config);
     }
 
     // JDK6 has JDBC 4.0 which doesn't have this -- don't add @Override

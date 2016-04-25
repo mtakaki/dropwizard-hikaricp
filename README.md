@@ -27,7 +27,7 @@ The library is available at the maven central, so just add dependency to `pom.xm
   <dependency>
     <groupId>com.github.mtakaki</groupId>
     <artifactId>dropwizard-hikaricp</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
   </dependency>
 </dependencies>
 ```

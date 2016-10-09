@@ -2,6 +2,7 @@ package io.dropwizard.db;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -12,7 +13,6 @@ import com.codahale.metrics.MetricRegistry;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.base.Optional;
 import com.google.common.collect.Maps;
 import com.zaxxer.hikari.HikariConfig;
 
@@ -33,9 +33,9 @@ public class DataSourceFactory implements PooledDataSourceFactory {
 
     private boolean commitOnReturn = false;
 
-    private Optional<Boolean> autoCommitByDefault = Optional.absent();
+    private Optional<Boolean> autoCommitByDefault = Optional.empty();
 
-    private Optional<Boolean> readOnlyByDefault = Optional.absent();
+    private Optional<Boolean> readOnlyByDefault = Optional.empty();
 
     private String user = null;
 
@@ -49,7 +49,7 @@ public class DataSourceFactory implements PooledDataSourceFactory {
 
     private String defaultCatalog;
 
-    private Optional<TransactionIsolation> defaultTransactionIsolation = Optional.absent();
+    private Optional<TransactionIsolation> defaultTransactionIsolation = Optional.empty();
 
     private boolean useFairQueue = true;
 
@@ -100,7 +100,7 @@ public class DataSourceFactory implements PooledDataSourceFactory {
     @MinDuration(1)
     private Duration validationInterval = Duration.seconds(30);
 
-    private Optional<String> validatorClassName = Optional.absent();
+    private Optional<String> validatorClassName = Optional.empty();
 
     private boolean removeAbandoned = false;
 
@@ -150,6 +150,7 @@ public class DataSourceFactory implements PooledDataSourceFactory {
         this.password = password;
     }
 
+    @Override
     @JsonProperty
     public String getUrl() {
         return this.url;
@@ -349,7 +350,7 @@ public class DataSourceFactory implements PooledDataSourceFactory {
 
     @JsonProperty
     public Optional<Duration> getMaxConnectionAge() {
-        return Optional.fromNullable(this.maxConnectionAge);
+        return Optional.ofNullable(this.maxConnectionAge);
     }
 
     @JsonProperty
@@ -415,12 +416,6 @@ public class DataSourceFactory implements PooledDataSourceFactory {
     @JsonProperty
     public void setValidationInterval(final Duration validationInterval) {
         this.validationInterval = validationInterval;
-    }
-
-    @Override
-    @JsonProperty
-    public Optional<Duration> getValidationQueryTimeout() {
-        return Optional.fromNullable(this.validationQueryTimeout);
     }
 
     @JsonProperty
@@ -506,5 +501,11 @@ public class DataSourceFactory implements PooledDataSourceFactory {
             config.setTransactionIsolation(this.defaultTransactionIsolation.get().toString());
         }
         return new ManagedPooledDataSource(config, metricRegistry);
+    }
+
+    @Override
+    @JsonProperty
+    public java.util.Optional<Duration> getValidationQueryTimeout() {
+        return Optional.ofNullable(this.validationQueryTimeout);
     }
 }

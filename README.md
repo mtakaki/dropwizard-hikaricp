@@ -30,7 +30,7 @@ The library is available at the maven central, so just add dependency to `pom.xm
   <dependency>
     <groupId>com.github.mtakaki</groupId>
     <artifactId>dropwizard-hikaricp</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
   </dependency>
 </dependencies>
 ```

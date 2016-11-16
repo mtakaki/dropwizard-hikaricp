@@ -495,7 +495,7 @@ public class DataSourceFactory implements PooledDataSourceFactory {
         config.setPassword(this.user != null && this.password == null ? "" : this.password);
         config.setConnectionTestQuery(this.validationQuery);
         if (this.getValidationQueryTimeout().isPresent()) {
-            config.setValidationTimeout(this.validationQueryTimeout.toSeconds());
+            config.setValidationTimeout(this.validationQueryTimeout.toMilliseconds());
         }
         if (this.defaultTransactionIsolation.isPresent()) {
             config.setTransactionIsolation(this.defaultTransactionIsolation.get().toString());

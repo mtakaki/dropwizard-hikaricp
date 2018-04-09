@@ -23,10 +23,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.criterion.Restrictions;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -46,7 +44,6 @@ import io.dropwizard.setup.Environment;
 import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import io.dropwizard.util.Duration;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -76,9 +73,8 @@ public class ManagedPooledDataSourceTest {
             super(sessionFactory);
         }
 
-        public TestEntity get(final int id) {
-            final Criteria criteria = this.criteria().add(Restrictions.eq("id", id));
-            return this.uniqueResult(criteria);
+        public TestEntity getById(final int id) {
+            return this.get(id);
         }
 
         public void save(final TestEntity entity) {
@@ -97,7 +93,7 @@ public class ManagedPooledDataSourceTest {
         @Path("/{id}")
         @UnitOfWork
         public TestEntity get(@PathParam("id") final int id) {
-            return this.dao.get(id);
+            return this.dao.getById(id);
         }
 
         @POST
@@ -141,7 +137,7 @@ public class ManagedPooledDataSourceTest {
     }
 
     @Rule
-    public final DropwizardAppRule<SampleConfiguration> RULE = new DropwizardAppRule<SampleConfiguration>(
+    public final DropwizardAppRule<SampleConfiguration> RULE = new DropwizardAppRule<>(
             SampleApplication.class,
             ResourceHelpers.resourceFilePath("config.yml"));
     @Rule

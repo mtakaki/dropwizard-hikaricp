@@ -19,7 +19,13 @@ These are the available transaction isolation values. If not sure, leave it unse
 - TRANSACTION\_REPEATABLE\_READ
 - TRANSACTION\_SERIALIZABLE
 
-Currently supporting dropwizard version `1.0.2`.
+These are the supported versions of dropwizard:
+
+| Dropwizard  |  Dropwizard-hikaricp | HikariCP |
+|---|---|---|
+| 1.0.2  | 1.0.2  | 2.4.4 |
+| 1.0.3  | 1.0.3  | 2.5.1 |
+| 1.3.1  | 1.3.1  | 3.0.0 |
 
 ## Maven
 
@@ -30,7 +36,7 @@ The library is available at the maven central, so just add dependency to `pom.xm
   <dependency>
     <groupId>com.github.mtakaki</groupId>
     <artifactId>dropwizard-hikaricp</artifactId>
-    <version>1.0.3</version>
+    <version>1.3.1</version>
   </dependency>
 </dependencies>
 ```
@@ -39,14 +45,14 @@ If the bundle is actually using HikariCP, you should be able to see this right i
 
 ```
 INFO  [2016-03-14 06:32:06,681] org.eclipse.jetty.util.log: Logging initialized @1894ms
-INFO  [2016-03-14 06:32:08,675] com.zaxxer.hikari.HikariDataSource: hibernate - Started.
+INFO  [2016-03-14 06:32:08,675] com.zaxxer.hikari.HikariDataSource: hibernate - Starting...
 ```
 
 If you **don't** see it, it means it's not using HikariCP.
 
 ## Benchmark
 
-Before looking into the benchmark numbers, I recommend reading [HikariCP wiki](https://github.com/brettwooldridge/HikariCP/wiki/%22My-benchmark-doesn't-show-a-difference.%22) explaining the differences between Hikari and Tomcat.
+Before looking into the benchmark numbers, I recommend reading [HikariCP wiki](https://github.com/brettwooldridge/HikariCP/wiki/%22My-benchmark-doesn't-show-a-difference.%22) explaining the differences between Hikari and Tomcat. There's also an extensive benchmarking produced by [Nick Babcock](https://nbsoftsolutions.com/blog/the-difficulty-of-performance-evaluation-of-hikaricp-in-dropwizard), in which he talks about these results I've found.
 
 The benchmark was ran on these specs:
 

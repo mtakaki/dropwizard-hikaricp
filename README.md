@@ -52,7 +52,7 @@ If you **don't** see it, it means it's not using HikariCP.
 
 ## Benchmark
 
-Before looking into the benchmark numbers, I recommend reading [HikariCP wiki](https://github.com/brettwooldridge/HikariCP/wiki/%22My-benchmark-doesn't-show-a-difference.%22) explaining the differences between Hikari and Tomcat. There's also an extensive benchmarking produced by [Nick Babcock](https://nbsoftsolutions.com/blog/the-difficulty-of-performance-evaluation-of-hikaricp-in-dropwizard), in which he talks about these results I've found.
+Before looking into the benchmark numbers, I recommend reading [HikariCP wiki](https://github.com/brettwooldridge/HikariCP/wiki/%22My-benchmark-doesn't-show-a-difference.%22) explaining the differences between Hikari and Tomcat. There's also an extensive benchmarking produced by [Nick Babcock](https://nbsoftsolutions.com/blog/the-difficulty-of-performance-evaluation-of-hikaricp-in-dropwizard), in which he talks about these results I've found, plus some very comprehensive tests. 
 
 The benchmark was ran on these specs:
 

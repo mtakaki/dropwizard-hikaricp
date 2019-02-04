@@ -1,5 +1,5 @@
 # Status
-![Build Status](https://codeship.com/projects/37601470-cb27-0133-b906-266ee181f653/status?branch=master)
+[![CircleCI](https://circleci.com/gh/mtakaki/dropwizard-hikaricp/tree/master.svg?style=svg)](https://circleci.com/gh/mtakaki/dropwizard-hikaricp/tree/master)
 [![Coverage Status](https://coveralls.io/repos/github/mtakaki/dropwizard-hikaricp/badge.svg?branch=master)](https://coveralls.io/github/mtakaki/dropwizard-hikaricp?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/b6b6a9a48d334299ab49f012643bc046)](https://www.codacy.com/app/mitsuotakaki/dropwizard-hikaricp)
 [![Download](https://maven-badges.herokuapp.com/maven-central/com.github.mtakaki/dropwizard-hikaricp/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.mtakaki/dropwizard-hikaricp)

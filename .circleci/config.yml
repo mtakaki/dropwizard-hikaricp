@@ -33,3 +33,5 @@ jobs:
         
       # run tests!
       - run: mvn -B test jacoco:report coveralls:report
+      - store_test_results:
+          path: target/surefire-reports

@@ -3,7 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/mtakaki/dropwizard-hikaricp/badge.svg?branch=master)](https://coveralls.io/github/mtakaki/dropwizard-hikaricp?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/b6b6a9a48d334299ab49f012643bc046)](https://www.codacy.com/app/mitsuotakaki/dropwizard-hikaricp)
 [![Download](https://maven-badges.herokuapp.com/maven-central/com.github.mtakaki/dropwizard-hikaricp/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.mtakaki/dropwizard-hikaricp)
-[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/com.github.mtakaki/dropwizard-hikaricp/badge.svg)](http://www.javadoc.io/doc/com.github.mtakaki/dropwizard-hikaricp)
+[![Javadoc](http://javadoc.io/badge/com.github.mtakaki/dropwizard-hikaricp.svg)](http://www.javadoc.io/doc/com.github.mtakaki/dropwizard-hikaricp)
 [![Dependency Status](https://www.versioneye.com/user/projects/57e785c679806f002f4ac7e9/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57e785c679806f002f4ac7e9)
 
 # dropwizard-hikaricp

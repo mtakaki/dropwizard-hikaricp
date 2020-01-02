@@ -18,38 +18,34 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.client.Client;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.DynamicUpdate;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;
-import io.dropwizard.client.JerseyClientBuilder;
-import io.dropwizard.client.JerseyClientConfiguration;
 import io.dropwizard.hibernate.AbstractDAO;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import io.dropwizard.testing.ResourceHelpers;
-import io.dropwizard.testing.junit.DropwizardAppRule;
-import io.dropwizard.util.Duration;
+import io.dropwizard.testing.DropwizardTestSupport;
+import io.dropwizard.testing.junit5.DropwizardAppExtension;
+import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@ExtendWith(DropwizardExtensionsSupport.class)
 public class ManagedPooledDataSourceTest {
     @Data
     @NoArgsConstructor
@@ -136,38 +132,24 @@ public class ManagedPooledDataSourceTest {
         }
     }
 
-    @Rule
-    public final DropwizardAppRule<SampleConfiguration> RULE = new DropwizardAppRule<>(
-            SampleApplication.class,
-            ResourceHelpers.resourceFilePath("config.yml"));
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
-
-    private Client client;
-
-    @Before
-    public void createClient() {
-        final JerseyClientConfiguration configuration = new JerseyClientConfiguration();
-        configuration.setTimeout(Duration.minutes(1L));
-        configuration.setConnectionTimeout(Duration.minutes(1L));
-        configuration.setConnectionRequestTimeout(Duration.minutes(1L));
-        this.client = new JerseyClientBuilder(this.RULE.getEnvironment()).using(configuration)
-                .build("test client");
-    }
+    private final DropwizardTestSupport<SampleConfiguration> testSupport = new DropwizardTestSupport<>(
+            SampleApplication.class, "src/test/resources/config.yml");
+    private final DropwizardAppExtension<SampleConfiguration> DROPWIZARD = new DropwizardAppExtension<>(
+            this.testSupport);
 
     @Test
     public void testInsertAndQuery() throws Exception {
         final TestEntity entity = TestEntity.builder()
                 .key("abc").build();
 
-        final Response response = this.client
-                .target(String.format("http://localhost:%d/test", this.RULE.getLocalPort()))
+        final Response response = this.DROPWIZARD.client()
+                .target(String.format("http://localhost:%d/test", this.DROPWIZARD.getLocalPort()))
                 .request()
                 .post(javax.ws.rs.client.Entity.json(entity));
         assertThat(response.getStatus()).isEqualTo(Status.CREATED.getStatusCode());
 
-        final TestEntity createdEntity = this.client
-                .target(String.format("http://localhost:%d/test/1", this.RULE.getLocalPort()))
+        final TestEntity createdEntity = this.DROPWIZARD.client()
+                .target(String.format("http://localhost:%d/test/1", this.DROPWIZARD.getLocalPort()))
                 .request()
                 .get(TestEntity.class);
         assertThat(createdEntity).isEqualToIgnoringGivenFields(entity, "id");

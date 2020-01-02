@@ -22,6 +22,8 @@ import io.dropwizard.validation.ValidationMethod;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DataSourceFactory implements PooledDataSourceFactory {
+    private static final String DEFAULT_VALIDATION_QUERY = "/* Health Check */ SELECT 1";
+
     public enum TransactionIsolation {
         TRANSACTION_NONE, TRANSACTION_READ_UNCOMMITTED, TRANSACTION_READ_COMMITTED, TRANSACTION_REPEATABLE_READ, TRANSACTION_SERIALIZABLE;
     }
@@ -77,7 +79,7 @@ public class DataSourceFactory implements PooledDataSourceFactory {
     private Duration minIdleTime = Duration.minutes(1);
 
     @NotNull
-    private String validationQuery = "/* Health Check */ SELECT 1";
+    private Optional<String> validationQuery = Optional.of(DEFAULT_VALIDATION_QUERY);
 
     @MinDuration(value = 1, unit = TimeUnit.SECONDS)
     private Duration validationQueryTimeout;
@@ -184,7 +186,7 @@ public class DataSourceFactory implements PooledDataSourceFactory {
 
     @Override
     @JsonProperty
-    public String getValidationQuery() {
+    public Optional<String> getValidationQuery() {
         return this.validationQuery;
     }
 
@@ -192,12 +194,12 @@ public class DataSourceFactory implements PooledDataSourceFactory {
     @Deprecated
     @JsonIgnore
     public String getHealthCheckValidationQuery() {
-        return this.getValidationQuery();
+        return this.getValidationQuery().orElse(DEFAULT_VALIDATION_QUERY);
     }
 
     @JsonProperty
     public void setValidationQuery(final String validationQuery) {
-        this.validationQuery = validationQuery;
+        this.validationQuery = Optional.ofNullable(validationQuery);
     }
 
     @JsonProperty
@@ -493,7 +495,7 @@ public class DataSourceFactory implements PooledDataSourceFactory {
         config.setJdbcUrl(this.url);
         config.setUsername(this.user);
         config.setPassword(this.user != null && this.password == null ? "" : this.password);
-        config.setConnectionTestQuery(this.validationQuery);
+        config.setConnectionTestQuery(this.validationQuery.orElse(DEFAULT_VALIDATION_QUERY));
         if (this.getValidationQueryTimeout().isPresent()) {
             config.setValidationTimeout(this.validationQueryTimeout.toMilliseconds());
         }

@@ -34,6 +34,8 @@ database:
   checkConnectionWhileIdle: true
 
   checkConnectionOnBorrow: true
+  # 500ms
+  connectionTimeout: 500
 
 server:
   applicationConnectors:

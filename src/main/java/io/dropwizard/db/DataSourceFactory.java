@@ -94,6 +94,16 @@ public class DataSourceFactory implements PooledDataSourceFactory {
 
     private boolean autoCommentsEnabled = true;
 
+    private long connectionTimeout;
+
+    public long getConnectionTimeout() {
+        return this.connectionTimeout;
+    }
+
+    public void setConnectionTimeout(final long connectionTimeout) {
+        this.connectionTimeout = connectionTimeout;
+    }
+
     @NotNull
     @MinDuration(1)
     private Duration evictionInterval = Duration.seconds(5);
@@ -502,6 +512,7 @@ public class DataSourceFactory implements PooledDataSourceFactory {
         if (this.defaultTransactionIsolation.isPresent()) {
             config.setTransactionIsolation(this.defaultTransactionIsolation.get().toString());
         }
+        config.setConnectionTimeout(this.connectionTimeout);
         return new ManagedPooledDataSource(config, metricRegistry);
     }
 

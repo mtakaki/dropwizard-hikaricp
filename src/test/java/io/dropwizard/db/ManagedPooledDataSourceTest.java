@@ -27,7 +27,9 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import com.codahale.metrics.MetricRegistry;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.zaxxer.hikari.HikariDataSource;
 
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;
@@ -114,6 +116,10 @@ public class ManagedPooledDataSourceTest {
             @Override
             public DataSourceFactory getDataSourceFactory(
                     final SampleConfiguration configuration) {
+                final ManagedDataSource dataSource = configuration.getDatabase().build(new MetricRegistry(), "");
+                assertThat(dataSource).isInstanceOf(HikariDataSource.class);
+                final HikariDataSource hikariDataSource = (HikariDataSource) dataSource;
+                assertThat(hikariDataSource.getConnectionTimeout()).isEqualTo(1000L);
                 return configuration.getDatabase();
             }
         };

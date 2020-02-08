@@ -84,6 +84,18 @@ public class DataSourceFactory implements PooledDataSourceFactory {
     @MinDuration(value = 1, unit = TimeUnit.SECONDS)
     private Duration validationQueryTimeout;
 
+    @MinDuration(value = 1, unit = TimeUnit.SECONDS)
+    private Duration connectionTimeout;
+
+    @MinDuration(value = 1, unit = TimeUnit.SECONDS)
+    private Duration idleTimeout;
+
+    @MinDuration(value = 1, unit = TimeUnit.SECONDS)
+    private Duration initializationFailTimeout;
+
+    @MinDuration(value = 1, unit = TimeUnit.SECONDS)
+    private Duration validationTimeout;
+
     private boolean checkConnectionWhileIdle = true;
 
     private boolean checkConnectionOnBorrow = false;
@@ -109,6 +121,46 @@ public class DataSourceFactory implements PooledDataSourceFactory {
     @NotNull
     @MinDuration(1)
     private Duration removeAbandonedTimeout = Duration.seconds(60L);
+
+    @JsonProperty
+    public Optional<Duration> getConnectionTimeout() {
+        return Optional.ofNullable(this.connectionTimeout);
+    }
+
+    public void setConnectionTimeout(final Duration connectionTimeout) {
+        this.connectionTimeout = connectionTimeout;
+    }
+
+    @JsonProperty
+    public Optional<Duration> getIdleTimeout() {
+        return Optional.ofNullable(this.idleTimeout);
+    }
+
+    public void setIdleTimeout(final Duration idleTimeout) {
+        this.idleTimeout = idleTimeout;
+    }
+
+    @JsonProperty
+    public Optional<Duration> getInitializationFailTimeout() {
+        return Optional.ofNullable(this.initializationFailTimeout);
+    }
+
+    public void setInitializationFailTimeout(final Duration initializationFailTimeout) {
+        this.initializationFailTimeout = initializationFailTimeout;
+    }
+
+    @JsonProperty
+    public Optional<Duration> getValidationTimeout() {
+        return Optional.ofNullable(this.validationTimeout);
+    }
+
+    public void setValidationTimeout(final Duration validationTimeout) {
+        this.validationTimeout = validationTimeout;
+    }
+
+    public void setValidationQuery(final Optional<String> validationQuery) {
+        this.validationQuery = validationQuery;
+    }
 
     @JsonProperty
     @Override
@@ -496,12 +548,15 @@ public class DataSourceFactory implements PooledDataSourceFactory {
         config.setUsername(this.user);
         config.setPassword(this.user != null && this.password == null ? "" : this.password);
         config.setConnectionTestQuery(this.validationQuery.orElse(DEFAULT_VALIDATION_QUERY));
-        if (this.getValidationQueryTimeout().isPresent()) {
-            config.setValidationTimeout(this.validationQueryTimeout.toMilliseconds());
-        }
+        this.getValidationQueryTimeout().ifPresent(timeout -> config.setValidationTimeout(timeout.toMilliseconds()));
         if (this.defaultTransactionIsolation.isPresent()) {
             config.setTransactionIsolation(this.defaultTransactionIsolation.get().toString());
         }
+        this.getConnectionTimeout().ifPresent(timeout -> config.setConnectionTimeout(timeout.toMilliseconds()));
+        this.getIdleTimeout().ifPresent(timeout -> config.setIdleTimeout(timeout.toMilliseconds()));
+        this.getInitializationFailTimeout()
+                .ifPresent(timeout -> config.setInitializationFailTimeout(timeout.toMilliseconds()));
+        this.getValidationTimeout().ifPresent(timeout -> config.setValidationTimeout(timeout.toMilliseconds()));
         return new ManagedPooledDataSource(config, metricRegistry);
     }
 

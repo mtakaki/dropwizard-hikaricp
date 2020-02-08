@@ -35,6 +35,8 @@ database:
 
   checkConnectionOnBorrow: true
 
+  connectionTimeout: 1s
+
 server:
   applicationConnectors:
     - type: http

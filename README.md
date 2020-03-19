@@ -30,6 +30,7 @@ These are the supported versions of dropwizard:
 | 1.3.18 | 1.3.18 | 3.3.1 |
 | 2.0.0  | 2.0.0  | 3.4.1 |
 | 2.0.1  | 2.0.1  | 3.4.2 |
+| 2.0.2  | 2.0.2  | 3.4.2 |
 
 ## Maven
 
@@ -40,7 +41,7 @@ The library is available at the maven central, so just add dependency to `pom.xm
   <dependency>
     <groupId>com.github.mtakaki</groupId>
     <artifactId>dropwizard-hikaricp</artifactId>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
   </dependency>
 </dependencies>
 ```

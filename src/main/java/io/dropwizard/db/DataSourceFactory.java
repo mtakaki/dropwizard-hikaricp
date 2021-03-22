@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Nullable;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -317,13 +318,14 @@ public class DataSourceFactory implements PooledDataSourceFactory {
     }
 
     @JsonProperty
-    public Optional<Boolean> getAutoCommitByDefault() {
-        return this.autoCommitByDefault;
+    @Nullable
+    public Boolean getAutoCommitByDefault() {
+        return this.autoCommitByDefault.orElse(null);
     }
 
     @JsonProperty
-    public void setAutoCommitByDefault(final Optional<Boolean> autoCommit) {
-        this.autoCommitByDefault = autoCommit;
+    public void setAutoCommitByDefault(final Boolean autoCommit) {
+        this.autoCommitByDefault = Optional.ofNullable(autoCommit);
     }
 
     @JsonProperty

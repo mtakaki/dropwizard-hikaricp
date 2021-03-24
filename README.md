@@ -32,6 +32,7 @@ These are the supported versions of dropwizard:
 | 2.0.1  | 2.0.1  | 3.4.2 |
 | 2.0.2  | 2.0.2  | 3.4.2 |
 | 2.0.10 | 2.0.10 | 3.4.5 |
+| 2.0.20 | 2.0.20 | 4.0.3 |
 
 ## Maven
 
